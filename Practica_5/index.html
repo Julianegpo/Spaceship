@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="lib/js/jquery-3.1.1.js" type="text/javascript"></script>
+        <script src="lib/js/bootstrap.js" type="text/javascript"></script>
+        <script src="lib/js/npm.js" type="text/javascript"></script>
+        <link href="lib/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <script src="script/script.js" type="text/javascript"></script>
+        <link href="lib/css/basic.css" rel="stylesheet" type="text/css"/>
+        <script src="lib/js/hittest.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <header class="page-header">
+            <h3>
+                <center>
+                    <strong>Ship Game</strong>
+                </center>
+            </h3>
+        </header>
+        <div class="container row-lg-6 col-lg-12">
+
+            <div id="info" class="row">
+                <div class="form-group form-inline row-lg-6" id="userData">
+                    <label for="userName">User name</label>
+                    <input type="text" class="form-control" id="userName" placeholder="Your user name here...">
+                    <div class="btn btn-default" id="sendUserData">Send</div>    
+                </div>
+                <div>
+                    <div class="btn btn-info col-lg-1" id="start">Start</div>
+                    <div class="btn btn-warning col-lg-1" id="pause">Pause</div>
+                    <div class="btn btn-danger col-lg-1" id="restart">Restart</div>
+                    <div class="col-lg-4">
+                        <div class="col-lg-2">Puntuación:</div>
+                        <div class="col-lg-2" id="points">0</div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="col-lg-2">Escudo:</div>
+                        <div class="col-lg-2" id="shield"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="map" class="row">
+            </div>
+        </div>
+    </body>
+</html>
