@@ -11,18 +11,21 @@ function init() {
 }
 
 function saveUserData() {
-
+    var warning = $("<p class='alert-danger'>\n\
+                    <strong>User name must not be empty!</strong>\n\
+                    </p>");
+    
     if ($("#userName").val() == "") {
-        var warning = $("<p class='alert-danger'><strong>Input value must not be empty!</strong></p>");
         $("#userData").append(warning);
     } else {
+        warning.remove();
         $.ajax({
             type: "POST",
             url: "script/response.php",
             dataType: "json",
-            data: {userName: $("#userName").val()},
+            data: {userName: $("#userName").val(), code: 1},
             success: function (response) {
-                alert(response.users);
+                
             }
         });
     }
@@ -118,7 +121,7 @@ function moveAsteroid() {
         type: "POST",
         url: "script/response.php",
         dataType: "json",
-        data: {height: $("#map").css("height")},
+        data: {height: $("#map").css("height"), code: 2},
         success: function (response) {
             //alert(response.random);
             var asteroid = $("<img src='img/donald.png'/>");

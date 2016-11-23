@@ -1,14 +1,17 @@
 <?php
 
+session_start();
+$users = array();
 $_SESSION["user"] = $_POST["userName"];
-$mapHeight = $_POST["height"];
+$code = $_POST["code"];
 
-$users=array();
-array_push($users, $_SESSION["user"]);
+if ($code == 1) {
+    
+} else {
+    $mapHeight = $_POST["height"];
+    $random = rand(0, intval($mapHeight));
 
-$random = rand(0, intval($mapHeight));
-
-$response = '{"random":"'.$random.'",'
-        . '"users":"'.$users.'"}';
+    $response = '{"random":"' .$random .'"}';
+}
 echo $response;
 ?>
