@@ -8,6 +8,7 @@ function init() {
     ship.css("position", "absolute");
     $("#map").append(ship);
     $("#sendUserData").click(saveUserData);
+    $("#start").click(initGame);
 }
 
 function saveUserData() {
@@ -21,11 +22,16 @@ function saveUserData() {
         warning.remove();
         $.ajax({
             type: "POST",
-            url: "script/response.php",
+            url: "script/responseUsers.php",
             dataType: "json",
-            data: {userName: $("#userName").val(), code: 1},
+            data: {userName: $("#userName").val()},
             success: function (response) {
-                
+                //$("#usersList").append(response.user);
+                var li = "<li>";
+                for(var name in response.users){
+                    li += "Nombre: "+response.users[name].name+"</li>";
+                }
+                $("#usersList").append(li)
             }
         });
     }
@@ -112,16 +118,16 @@ function setPropertiesAsteroid(asteroid, random) {
 }
 
 function asteroidLoop() {
-    interval = setInterval(moveAsteroid, 3000);
+    interval = setInterval(moveAsteroid, 1000);
 }
 
 function moveAsteroid() {
     //consulta ajax y con la respuesta generar el meteorito.
     $.ajax({
         type: "POST",
-        url: "script/response.php",
+        url: "script/responseAsteroids.php",
         dataType: "json",
-        data: {height: $("#map").css("height"), code: 2},
+        data: {height: $("#map").css("height")},
         success: function (response) {
             //alert(response.random);
             var asteroid = $("<img src='img/donald.png'/>");
