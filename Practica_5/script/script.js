@@ -29,9 +29,12 @@ function saveUserData() {
                 //$("#usersList").append(response.user);
                 var ul = "<ul>";
                 for(var name in response.users){
-                    ul += "<li>Name: "+response.users[name].name+", score: "+response.users[name].score+"</li>";
+                    if(response.users[name].name != ""){
+                        ul += "<li>Name: "+response.users[name].name+", score: "+response.users[name].score+"</li>";
+                    }
                 }
                 ul+="</ul>";
+                $("#usersList > ul > li").remove();
                 $("#usersList").html(ul);
                 $("#start").fadeIn();
             }

@@ -15,8 +15,7 @@ if (!isset($_SESSION["users"])) {
         //echo $user."\n";
         $response.='{"name":"'.$user.'", "score":"'.$puntuacion.'"},';
     }
-     $response.='{"":""}';
-    
+     $response.='{"name":"", "score":""}';
 }
 $response.=']}';
 echo $response;
