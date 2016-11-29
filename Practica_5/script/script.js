@@ -27,11 +27,13 @@ function saveUserData() {
             data: {userName: $("#userName").val()},
             success: function (response) {
                 //$("#usersList").append(response.user);
-                var li = "<li>";
+                var ul = "<ul>";
                 for(var name in response.users){
-                    li += "Nombre: "+response.users[name].name+"</li>";
+                    ul += "<li>Name: "+response.users[name].name+", score: "+response.users[name].score+"</li>";
                 }
-                $("#usersList").append(li)
+                ul+="</ul>";
+                $("#usersList").html(ul);
+                $("#start").fadeIn();
             }
         });
     }

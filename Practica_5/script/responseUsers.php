@@ -13,9 +13,11 @@ if (!isset($_SESSION["users"])) {
     //var_dump($users);
     foreach($users as $user=>$puntuacion){
         //echo $user."\n";
-        $response.='{"name":"'.$user.'"}';
+        $response.='{"name":"'.$user.'", "score":"'.$puntuacion.'"},';
     }
-    $response.=']}';
+     $response.='{"":""}';
+    
 }
+$response.=']}';
 echo $response;
 ?>
