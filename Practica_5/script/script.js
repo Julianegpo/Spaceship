@@ -1,21 +1,23 @@
 $(document).ready(init);
 
-var ship = $("<img src='img/rocket.png'/>");
+var ship = "";
 var interval;
 var points = 0;
 
 function init() {
+    ship = $("<img src='img/ship01.png'/>");
     ship.css("position", "absolute");
     $("#map").append(ship);
     $("#sendUserData").click(saveUserData);
     $("#start").click(initGame);
+    $("#change").click(changeShip);
 }
 
 function saveUserData() {
     var warning = $("<p class='alert-danger'>\n\
                     <strong>User name must not be empty!</strong>\n\
                     </p>");
-    
+
     if ($("#userName").val() == "") {
         $("#userData").append(warning);
     } else {
@@ -28,12 +30,12 @@ function saveUserData() {
             success: function (response) {
                 //$("#usersList").append(response.user);
                 var ul = "<ul>";
-                for(var name in response.users){
-                    if(response.users[name].name != ""){
-                        ul += "<li>Name: "+response.users[name].name+", score: "+response.users[name].score+"</li>";
+                for (var name in response.users) {
+                    if (response.users[name].name != "") {
+                        ul += "<li>Name: " + response.users[name].name + ", score: " + response.users[name].score + "</li>";
                     }
                 }
-                ul+="</ul>";
+                ul += "</ul>";
                 $("#usersList > ul > li").remove();
                 $("#usersList").html(ul);
                 $("#start").fadeIn();
@@ -43,15 +45,21 @@ function saveUserData() {
 }
 
 function initGame() {
-    $("#start").css("display", "none");
-    $("#pause").show();
-    $("#restart").show();
-
-    $("#pause").click(pauseGame);
-    $("#restart").click(restartGame);
-
     $(document).keydown(function (e) {
         switch (e.which) {
+            case 72:
+                var timer = $("<img src='img/timer.png'/>");
+                timer.css({
+                    "position": "absolute",
+                    "width": "125px",
+                    "height": "125px",
+                    "left": $("#map").width() - 125
+                });
+
+                $("#map").append(timer);
+                animateTimer(timer);
+                
+                break;
             case 37:
                 ship.stop().animate({
                     left: '-=30'
@@ -96,22 +104,6 @@ function initGame() {
     });
     asteroidLoop();
 }
-
-function pauseGame() {
-    $("#pause").css("display", "none");
-    $("#restart").css("display", "none");
-    $("#start").show();
-    $("#start").click(initGame);
-
-}
-
-function restartGame() {
-    $("#pause").css("display", "none");
-    $("#restart").css("display", "none");
-    $("#start").show();
-    $("#start").click(initGame);
-}
-
 function setPropertiesAsteroid(asteroid, random) {
     asteroid.css({
         "position": "absolute",
@@ -172,4 +164,47 @@ function moveAsteroid() {
                     })
         }
     });
+}
+
+function changeShip() {
+    $.ajax({
+        type: "POST",
+        url: "script/responseShip.php",
+        dataType: "json",
+        data: {},
+        success: function (response) {
+            ship.remove();
+            ship = $(response.ship);
+            ship.css("position", "absolute");
+            $("#map").append(ship);
+        }
+    });
+}
+
+function animateTimer(timer){
+    timer.animate(
+                        {
+                            "left": "-30"
+                        },
+                        {
+                            duration: 1000,
+                            step: function (now, fx) {
+                                if ($(timer).hittest($(ship))) {
+                                    timer.remove();
+                                    clearInterval(interval);
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "script/responseTimer.php",
+                                        dataType: "json",
+                                        data: {},
+                                        success: function (response) {
+                                            interval = setInterval(moveAsteroid, response.random)
+                                        }
+                                    });
+                                }
+                            },
+                            complete: function () {
+                                timer.remove();
+                            }
+                        })
 }
